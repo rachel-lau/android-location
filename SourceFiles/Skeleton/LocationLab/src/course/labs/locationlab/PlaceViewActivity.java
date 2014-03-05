@@ -3,6 +3,7 @@ package course.labs.locationlab;
 import java.util.ArrayList;
 
 import android.app.ListActivity;
+import android.content.Context;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
@@ -45,17 +46,22 @@ public class PlaceViewActivity extends ListActivity implements LocationListener 
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
+
+		mLocationManager = (LocationManager) getSystemService(Context.LOCATION_SERVICE);
+		
 		// TODO - Set up the app's user interface
 		// This class is a ListActivity, so it has its own ListView
 		// ListView's adapter should be a PlaceViewAdapter
 		ListView listView = getListView();
-		setListAdapter(new PlaceViewAdapter(getApplicationContext()));
+
 
 		// TODO - add a footerView to the ListView
 		// You can use footer_view.xml to define the footer
 		LayoutInflater inflater = getLayoutInflater();
 		TextView footerView = (TextView) inflater.inflate(R.layout.footer_view, null);
 		listView.addFooterView(footerView);
+		mAdapter = new PlaceViewAdapter(getApplicationContext());
+		setListAdapter(mAdapter);
 		
 		// When the footerView's onClick() method is called, it must issue the
 		// follow log call
